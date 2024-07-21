@@ -26,7 +26,8 @@ public class Users {
 
     private String password;
 
-    private USER_ROLE role;
+
+    private USER_ROLE role = USER_ROLE.ROLE_CUSTOMER;
 
     @JsonIgnore // ignoring orders while fetching user
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer") // one user can have many orders

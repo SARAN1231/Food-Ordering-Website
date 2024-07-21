@@ -35,7 +35,7 @@ public class Orders {
     private Address deliveryAddress;
 
     @OneToMany // one order can have many order items
-    private List<OrderItem> items ;
+    private List<OrderItem> items;
 
     private int totalItems;
 
