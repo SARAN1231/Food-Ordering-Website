@@ -1,6 +1,7 @@
 package com.saran.food_server.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.saran.food_server.Dtos.Restaurantdto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,8 @@ public class Users {
 
     private String email;
 
-    private String password;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password; //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) is used to mark the password field so it will only be used during deserialization (input) and not during serialization (output).
 
 
     private USER_ROLE role = USER_ROLE.ROLE_CUSTOMER;

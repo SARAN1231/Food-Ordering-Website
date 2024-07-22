@@ -22,11 +22,11 @@ import java.util.List;
 public class JwttokenValidator extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
-        String jwt  = request.getHeader(JwtConstants.HEADER);
+        String jwt = request.getHeader(JwtConstants.HEADER);
 
         if (jwt != null && jwt.startsWith("Bearer ")) {
-            jwt = jwt.substring(7);
+            jwt = jwt.substring(7).trim();  // Trim any leading/trailing spaces
+            System.out.println("Trimmed JWT: " + jwt);  // Log the trimmed JWT
             try {
                 SecretKey key = Keys.hmacShaKeyFor(JwtConstants.SECRET_KEY.getBytes());
                 Claims claims = Jwts.parserBuilder()
@@ -34,18 +34,17 @@ public class JwttokenValidator extends OncePerRequestFilter {
                         .build()
                         .parseClaimsJws(jwt)
                         .getBody();
-                String  email = String.valueOf(claims.get("email"));
-                String  authorities = String.valueOf(claims.get("authorities"));
-              //example  authorities =  ROLE_CUSTOMER,ROLE_USER -> converted into Granted authority
+                String email = String.valueOf(claims.get("email"));
+                String authorities = String.valueOf(claims.get("authorities"));
                 List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
                 Authentication authentication = new UsernamePasswordAuthenticationToken(email, null, auth);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
+                System.out.println("JWT validation error: " + e.getMessage());  // Log the error message
                 throw new BadCredentialsException("Invalid JWT..........");
             }
         }
-        filterChain.doFilter(request,response);
-
+        filterChain.doFilter(request, response);
     }
 }
+

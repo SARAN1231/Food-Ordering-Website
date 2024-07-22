@@ -17,26 +17,30 @@ import java.util.Set;
 @Service
 public class JwtProvider {
 
-    private SecretKey key = Keys.hmacShaKeyFor(JwtConstants.SECRET_KEY.getBytes());
+    private final SecretKey key = Keys.hmacShaKeyFor(JwtConstants.SECRET_KEY.getBytes());
+
     public String generateToken(Authentication auth) {
         Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
         String roles = populateAuthorities(authorities);
         String jwt = Jwts.builder()
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime()+86400000))
-                .claim("email" ,auth.getName())
-                .claim("authorities",roles)
+                .setExpiration(new Date(new Date().getTime() + 86400000))
+                .claim("email", auth.getName())
+                .claim("authorities", roles)
+                .signWith(key)
                 .compact();
+        System.out.println("Generated JWT: " + jwt);  // Log the generated JWT
         return jwt;
     }
 
     public String getEmailFromToken(String jwt) {
+        System.out.println("Parsing JWT: " + jwt);  // Log the JWT before parsing
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(jwt)
                 .getBody();
-        String  email = String.valueOf(claims.get("email"));
+        String email = String.valueOf(claims.get("email"));
         return email;
     }
 
@@ -47,5 +51,5 @@ public class JwtProvider {
         }
         return String.join(",", authoritiesSet);
     }
-
 }
+
