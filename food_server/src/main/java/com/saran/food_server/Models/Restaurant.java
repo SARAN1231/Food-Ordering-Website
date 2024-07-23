@@ -43,7 +43,7 @@ public class Restaurant {
     private LocalDateTime registrationDate;
     private boolean open;
 
-    @JsonIgnore // mappedby tella that list of foods should be store in same table if not it creates a new table
+    @JsonIgnore // mappedby tells that list of foods should be store in same table if not it creates a new table
     @OneToMany(mappedBy = "restaurant",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Food> foods;
 }
