@@ -4,7 +4,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 const RestaurantCard = () => {
   return (
-  <Card className='m-5 w-[18rem]'>
+  <Card className=' w-[18rem]'>
     <div className={`${true ?"cursor-pointer" :"cursor-not-allowed"} relative`}>
         <img src="https://via.placeholder.com/150" 
         
