@@ -11,7 +11,7 @@ const CartItem = () => {
             src="https://cdn.pixabay.com/photo/2024/04/26/12/24/ai-generated-8721771_640.jpg"
              alt="" />
           </div>
-          <div className='flex items-center justify-between lg:w-[70%'>
+          <div className='flex items-center justify-between lg:w-[70%]'>
            <div className='space-y-1 lg:space-y-3 w-full'>
               <p>Biryani</p>
               <div className='flex justify-between items-center'>
@@ -29,7 +29,6 @@ const CartItem = () => {
               </div>
            </div>
              <p>$50</p> 
-             
           </div>
           
       </div>
